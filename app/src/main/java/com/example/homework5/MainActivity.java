@@ -1,5 +1,9 @@
 package com.example.homework5;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,17 +18,21 @@ import com.google.android.material.button.MaterialButton;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
+    private MaterialButton resultButton;
     private Double variableA, variableB;
     private Boolean isOperationClick;
     private Boolean isPlusClick;
     private Boolean isMinusClick;
     private Boolean isMultiplyClick;
     private Boolean isDivideClick;
+    private Boolean isEqualClick;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        registerReceiver(finishReceiver, new IntentFilter("close_all_activities"));
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -32,8 +40,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         textView = findViewById(R.id.text_view);
+        resultButton = findViewById(R.id.btn_result);
+        resultButton.setVisibility(View.GONE);
+
+        findViewById(R.id.btn_result).setOnClickListener(view -> {
+            String data = textView.getText().toString();
+
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            intent.putExtra("key", data);
+            startActivity(intent);
+        });
 
     }
+
+
 
     public void onNumberClick(View view) {
         String text = ((MaterialButton) view).getText().toString();
@@ -49,7 +69,12 @@ public class MainActivity extends AppCompatActivity {
         if (textView.getText().toString().equals(".")) {
             textView.setText("0.");
         }
+
         isOperationClick = false;
+        isEqualClick = false;
+
+        if(isEqualClick) resultButton.setVisibility(View.VISIBLE);
+        else resultButton.setVisibility(View.GONE);
     }
 
     public void onEqualClick(View view) {
@@ -73,6 +98,12 @@ public class MainActivity extends AppCompatActivity {
         }else {
             textView.setText(result.toString());
         }
+
+        isEqualClick = true;
+        if(isEqualClick && !textView.getText().toString().equals("0")) resultButton.setVisibility(View.VISIBLE);
+        else resultButton.setVisibility(View.GONE);
+
+
         isOperationClick = true;
         isMultiplyClick = false;
         isPlusClick = false;
@@ -85,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         isPlusClick = true;
         isOperationClick = true;
+
     }
 
     public void onMinusClick(View view) {
@@ -92,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMinusClick = true;
         isOperationClick = true;
+
     }
 
     public void onMultiplyClick(View view) {
@@ -99,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         isMultiplyClick = true;
         isOperationClick = true;
+
     }
 
     public void onDivideClick(View view) {
@@ -106,5 +140,13 @@ public class MainActivity extends AppCompatActivity {
 
         isDivideClick = true;
         isOperationClick = true;
+
     }
+
+    private BroadcastReceiver finishReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
 }

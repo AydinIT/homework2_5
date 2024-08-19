@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">homework5</string>
+
+    <string-array name="dropdown_items">
+        <item>Type 1</item>
+        <item>Type 2</item>
+        <item>Type 3</item>
+    </string-array>
+
 </resources>

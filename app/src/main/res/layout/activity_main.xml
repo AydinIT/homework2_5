@@ -9,33 +9,51 @@
     android:background="@color/black">
 
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_result"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/gray"
+        android:text="Result"
+        android:textSize="25sp"
+        android:textColor="@color/black"/>
+
+
+
     <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/container">
-    
-    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:paddingHorizontal="26dp"
-        android:clipToPadding="false">
-        <TextView
-            android:id="@+id/text_view"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="80sp"
-            android:textColor="@color/white"
-            android:maxLines="1"/>
+            android:layout_gravity="bottom"
+            android:clipToPadding="false"
+            android:paddingHorizontal="26dp">
 
-    </HorizontalScrollView>
-    
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:maxLines="1"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="80sp" />
+
+        </HorizontalScrollView>
 
 
-</FrameLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/container"
